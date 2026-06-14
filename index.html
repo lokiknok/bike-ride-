@@ -3,115 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Eternal Journey - A Cinematic Love Story</title>
+    <title>The Eternal Journey - Realistic Cinematic Edition</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-        }
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #050508;
-            font-family: 'Cinzel', 'Georgia', serif;
-        }
-        canvas {
-            display: block;
-            width: 100vw;
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-        /* Cinematic Vignette and Overlays */
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        body, html { width: 100%; height: 100%; overflow: hidden; background-color: #020202; font-family: 'Cinzel', 'Georgia', serif; }
+        canvas { display: block; width: 100vw; height: 100vh; position: absolute; top: 0; left: 0; z-index: 1; }
+        
         .cinematic-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-            background: 
-                radial-gradient(circle, transparent 40%, rgba(0,0,0,0.4) 80%, rgba(0,0,0,0.85) 100%),
-                linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.4) 100%);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none;
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0.95) 100%),
+                        linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.5) 100%);
         }
+        
         .film-grain {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 3;
-            pointer-events: none;
-            opacity: 0.04;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; opacity: 0.06;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
-        /* Story Text Overlays */
+
         .story-container {
-            position: absolute;
-            bottom: 8%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            text-align: center;
-            width: 80%;
-            max-width: 800px;
-            pointer-events: none;
+            position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%); z-index: 10;
+            text-align: center; width: 80%; max-width: 800px; pointer-events: none;
         }
         .story-text {
-            color: #ffffff;
-            font-size: 1.6rem;
-            letter-spacing: 3px;
-            text-shadow: 0 2px 15px rgba(0,0,0,0.8), 0 0 30px rgba(255,255,255,0.2);
-            font-weight: 300;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1.5s ease, transform 1.5s ease;
+            color: #ffffff; font-size: 1.6rem; letter-spacing: 2px;
+            text-shadow: 0 4px 20px rgba(0,0,0,1), 0 0 10px rgba(255,255,255,0.4);
+            font-weight: 300; opacity: 0; transform: translateY(20px); transition: opacity 1.5s ease, transform 1.5s ease;
         }
-        .story-text.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .sub-text {
-            color: #ffd700;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-top: 10px;
-            opacity: 0.7;
-        }
-        /* Music & UI Controls */
+        .story-text.active { opacity: 1; transform: translateY(0); }
+        .sub-text { color: #e6c200; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; opacity: 0.9; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+        
         .audio-control {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            z-index: 10;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 20px;
-            color: white;
-            letter-spacing: 2px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            border-radius: 20px;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
+            position: absolute; top: 30px; right: 30px; z-index: 10; background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.4); padding: 12px 24px; color: white; letter-spacing: 1px;
+            font-size: 0.85rem; cursor: pointer; border-radius: 4px; backdrop-filter: blur(10px); transition: all 0.3s;
         }
-        .audio-control:hover {
-            background: rgba(255,255,255,0.25);
-            box-shadow: 0 0 15px rgba(255,255,255,0.2);
-        }
-        /* Cinema Bars aspect ratio container trick */
-        .cinema-bar-top {
-            position: absolute; top: 0; left: 0; width: 100%; height: 5vh;
-            background: #000; z-index: 9; transition: height 1s;
-        }
-        .cinema-bar-bottom {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 5vh;
-            background: #000; z-index: 9; transition: height 1s;
-        }
+        .audio-control:hover { background: rgba(255,255,255,0.1); box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
+        
+        .cinema-bar-top { position: absolute; top: 0; left: 0; width: 100%; height: 8vh; background: #000; z-index: 9; }
+        .cinema-bar-bottom { position: absolute; bottom: 0; left: 0; width: 100%; height: 8vh; background: #000; z-index: 9; }
     </style>
 </head>
 <body>
@@ -121,7 +50,7 @@
     <div class="cinematic-overlay"></div>
     <div class="film-grain"></div>
 
-    <button class="audio-control" id="audioBtn">PLAY EXPERIENCE SOUNDTRACK</button>
+    <button class="audio-control" id="audioBtn">ACTIVATE REALISTIC AUDIO & EXPERIENCE</button>
 
     <div class="story-container">
         <p class="story-text" id="storyText">Our journey began in the gentle embrace of the morning sun...</p>
@@ -134,7 +63,6 @@
         const canvas = document.getElementById('cinemaCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Setup resize
         function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -142,74 +70,78 @@
         window.addEventListener('resize', resize);
         resize();
 
-        // Audio Synthesis Framework (Web Audio API Cinematic Engine)
+        // --- REALISTIC AUDIO SYNTHESIS ENGINE ---
         let audioCtx = null;
-        let ambientOsc = null;
-        let engineNoise = null;
 
-        function initCinematicAudio() {
+        function initRealisticAudio() {
             if(audioCtx) return;
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             
-            // Pad synth for romantic ambiance
-            ambientOsc = audioCtx.createOscillator();
-            let ambientGain = audioCtx.createGain();
-            ambientOsc.type = 'triangle';
-            ambientOsc.frequency.setValueAtTime(110, audioCtx.currentTime); // A2 Note
-            ambientGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            // 1. Cinematic Background Pad (Rich, deep strings/synth)
+            let padOsc = audioCtx.createOscillator();
+            let padOsc2 = audioCtx.createOscillator();
+            let padGain = audioCtx.createGain();
+            let padFilter = audioCtx.createBiquadFilter();
+
+            padOsc.type = 'sine';
+            padOsc2.type = 'triangle';
+            padOsc.frequency.value = 110; // A2
+            padOsc2.frequency.value = 220; // A3
             
-            let filter = audioCtx.createBiquadFilter();
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(400, audioCtx.currentTime);
+            padFilter.type = 'lowpass';
+            padFilter.frequency.value = 600;
+            
+            padGain.gain.setValueAtTime(0.0, audioCtx.currentTime);
+            padGain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 5);
 
-            ambientOsc.connect(filter);
-            filter.connect(ambientGain);
-            ambientGain.connect(audioCtx.destination);
-            ambientOsc.start();
+            padOsc.connect(padFilter);
+            padOsc2.connect(padFilter);
+            padFilter.connect(padGain);
+            padGain.connect(audioCtx.destination);
+            padOsc.start();
+            padOsc2.start();
 
-            // Motorcycle rumble synthesis
-            let bufferSize = 2 * audioCtx.sampleRate,
-                noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate),
-                output = noiseBuffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) {
-                output[i] = Math.random() * 2 - 1;
-            }
-
-            let whiteNoise = audioCtx.createBufferSource();
-            whiteNoise.buffer = noiseBuffer;
-            whiteNoise.loop = true;
-
-            let engineFilter = audioCtx.createBiquadFilter();
-            engineFilter.type = 'bandpass';
-            engineFilter.frequency.setValueAtTime(65, audioCtx.currentTime); // Low engine hum
-            engineFilter.Q.setValueAtTime(4, audioCtx.currentTime);
-
+            // 2. Realistic Motorcycle Engine Synthesizer (Combustion Cycle Simulation)
             let engineGain = audioCtx.createGain();
-            engineGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+            engineGain.gain.value = 0.25;
 
-            whiteNoise.connect(engineFilter);
+            // Base engine rumble (low frequency sawtooth)
+            let rumbleOsc = audioCtx.createOscillator();
+            rumbleOsc.type = 'sawtooth';
+            rumbleOsc.frequency.value = 45; // Deep exhaust note
+            
+            // Engine filter to muffle the harshness and make it sound like a real exhaust
+            let engineFilter = audioCtx.createBiquadFilter();
+            engineFilter.type = 'lowpass';
+            engineFilter.frequency.value = 250;
+            engineFilter.Q.value = 2;
+
+            // LFO to simulate the pistons firing (the "put-put-put" rhythm)
+            let pistonLFO = audioCtx.createOscillator();
+            pistonLFO.type = 'sine';
+            pistonLFO.frequency.value = 15; // RPM modulation speed
+            
+            let pistonGain = audioCtx.createGain();
+            pistonGain.gain.value = 0.8; // Depth of the pulsing
+
+            pistonLFO.connect(pistonGain.gain);
+            rumbleOsc.connect(pistonGain);
+            pistonGain.connect(engineFilter);
             engineFilter.connect(engineGain);
             engineGain.connect(audioCtx.destination);
-            whiteNoise.start();
+
+            rumbleOsc.start();
+            pistonLFO.start();
         }
 
         document.getElementById('audioBtn').addEventListener('click', function() {
-            initCinematicAudio();
-            this.style.display = 'none';
+            initRealisticAudio();
+            this.style.opacity = '0';
+            setTimeout(() => this.style.display = 'none', 500);
         });
 
-        // Chapters configuration
-        const STAGES = {
-            SUNRISE: 0,
-            TOWN: 1,
-            FLOWER_FIELDS: 2,
-            CELEBRATION: 3,
-            MOUNTAINS: 4,
-            RAINSTORM: 5,
-            STARRY_NIGHT: 6,
-            COSMIC: 7,
-            FINAL_HILLTOP: 8
-        };
+        // --- CHAPTERS & TIMELINE ---
+        const STAGES = { SUNRISE: 0, TOWN: 1, FLOWER_FIELDS: 2, CELEBRATION: 3, MOUNTAINS: 4, RAINSTORM: 5, STARRY_NIGHT: 6, COSMIC: 7, FINAL_HILLTOP: 8 };
 
         const stageData = [
             { text: "Our journey began in the gentle embrace of the morning sun.", title: "Chapter I: The Dawn of Us", duration: 8000 },
@@ -225,36 +157,18 @@
 
         let globalTimeline = 0;
         let currentStage = 0;
-        let transitionProgress = 0; // Cross-fade interpolator
-
-        // Particle Assets / Elements
         let particles = [];
         let stars = [];
         let rainDrops = [];
-        let lanterns = [];
+        
+        for(let i=0; i<200; i++) stars.push({ x: Math.random() * 2500, y: Math.random() * 1200, size: Math.random() * 2 + 0.5, alpha: Math.random() });
 
-        // Generate elements once
-        for(let i=0; i<150; i++) {
-            stars.push({
-                x: Math.random() * 2000,
-                y: Math.random() * 1000,
-                size: Math.random() * 2,
-                alpha: Math.random()
-            });
-        }
-
-        // Motorcycle & Couple Position Mechanics (Dynamic Tracking)
         let bike = {
-            baseX: window.innerWidth * 0.35,
-            baseY: window.innerHeight * 0.72,
-            x: window.innerWidth * 0.35,
-            y: window.innerHeight * 0.72,
-            wheelRotation: 0,
-            bobbing: 0,
-            speed: 5
+            baseX: window.innerWidth * 0.35, baseY: window.innerHeight * 0.72,
+            x: window.innerWidth * 0.35, y: window.innerHeight * 0.72,
+            wheelRotation: 0, bobbing: 0
         };
 
-        // Text Handler
         const storyEl = document.getElementById('storyText');
         const chapterEl = document.getElementById('chapterText');
         
@@ -270,730 +184,340 @@
         }
         storyEl.classList.add('active');
 
-        // Main Rendering/Simulation Loop
+        // --- MAIN RENDER LOOP ---
         function loop() {
-            globalTimeline += 16.66; // Approx 60fps increments
-
-            // Calculate current chapter based on elapsed time
+            globalTimeline += 16.66;
+            
             let elapsed = globalTimeline;
             let cumulativeTime = 0;
             let targetStage = 0;
-            
             for(let i=0; i<stageData.length; i++) {
                 cumulativeTime += stageData[i].duration;
-                if(elapsed < cumulativeTime) {
-                    targetStage = i;
-                    break;
-                }
+                if(elapsed < cumulativeTime) { targetStage = i; break; }
                 if(i === stageData.length - 1) targetStage = stageData.length - 1;
             }
-
-            if(targetStage !== currentStage) {
-                currentStage = targetStage;
-            }
+            if(targetStage !== currentStage) currentStage = targetStage;
             updateText(currentStage);
 
-            // Re-calc layout anchors dynamically
             bike.baseX = canvas.width * 0.35;
-            bike.baseY = canvas.height * 0.72;
+            bike.baseY = canvas.height * 0.68;
             
-            // Dynamic Camera Tracking & Drone effects via simulation adjustments
             let cameraScale = 1.0;
-            if(currentStage === STAGES.MOUNTAINS) cameraScale = 0.85; // Drone Zoom Out
-            if(currentStage === STAGES.COSMIC) cameraScale = 0.9;
-            if(currentStage === STAGES.FINAL_HILLTOP) cameraScale = 0.75; // Cinematic panoramic wide shot
+            if(currentStage === STAGES.MOUNTAINS) cameraScale = 0.9;
+            if(currentStage === STAGES.FINAL_HILLTOP) cameraScale = 0.8;
 
-            // Physics/Animation ticks
-            bike.wheelRotation += 0.25;
-            bike.bobbing = Math.sin(globalTimeline * 0.015) * 2.5;
+            bike.wheelRotation += 0.35;
+            // Realistic suspension micro-bobbing
+            bike.bobbing = (Math.sin(globalTimeline * 0.04) * 1.5) + (Math.sin(globalTimeline * 0.1) * 0.5);
             
-            // Smoothly track bike to layout coordinates
             bike.x += (bike.baseX - bike.x) * 0.05;
             if (currentStage === STAGES.FINAL_HILLTOP) {
-                // Hilltop end phase: Stop moving forward, pull to center hill
-                bike.y += ((canvas.height * 0.68) - bike.y) * 0.03;
+                bike.y += ((canvas.height * 0.65) - bike.y) * 0.03;
             } else {
-                bike.y += ((bike.baseY + bike.bobbing) - bike.y) * 0.1;
+                bike.y += ((bike.baseY + bike.bobbing) - bike.y) * 0.15;
             }
 
-            // Clear Screen
-            ctx.fillStyle = '#000';
+            ctx.fillStyle = '#050505';
             ctx.fillRect(0,0, canvas.width, canvas.height);
 
             ctx.save();
-            // Apply Master Cinematic Camera Zoom matrix from center
             ctx.translate(canvas.width/2, canvas.height/2);
             ctx.scale(cameraScale, cameraScale);
             ctx.translate(-canvas.width/2, -canvas.height/2);
 
-            // --- DRAW ENVIRONMENTS ---
             drawBackgrounds(currentStage);
-            
-            // Environmental foreground elements
             drawEnvironmentForeground(currentStage);
-
-            // --- DRAW MATURED TAMIL COUPLE & MOTORCYCLE (Cinematic Custom Silhouette Vectoring) ---
-            drawCinematicCoupleAndBike();
-
-            // Atmospheric weather systems
+            
+            // Render the highly detailed programmatic photoreal models
+            drawRealisticPhotorealisticModels();
+            
             drawWeatherEffects(currentStage);
-
             ctx.restore();
-
             requestAnimationFrame(loop);
         }
 
-        // Beautiful layered environment background blends with precise interpolation
+        // --- BACKGROUND & ENVIRONMENT RENDERERS ---
         function drawBackgrounds(stage) {
-            let width = canvas.width;
-            let height = canvas.height;
+            let width = canvas.width; let height = canvas.height;
             let grad = ctx.createLinearGradient(0, 0, 0, height);
 
-            switch(stage) {
-                case STAGES.SUNRISE:
-                    grad.addColorStop(0, '#1a0b2e'); // Deep Indigo
-                    grad.addColorStop(0.4, '#4c1c5c');
-                    grad.addColorStop(0.7, '#e65c40'); // Golden Orange Horizon
-                    grad.addColorStop(1, '#ffb366');   // Warm ground light
-                    ctx.fillStyle = grad;
-                    ctx.fillRect(0,0,width,height);
-                    // Draw Sun
-                    ctx.fillStyle = "rgba(255, 235, 180, 0.9)";
-                    ctx.shadowBlur = 100;
-                    ctx.shadowColor = "#ff9933";
-                    ctx.beginPath();
-                    ctx.arc(width * 0.7, height * 0.45, 75, 0, Math.PI*2);
-                    ctx.fill();
-                    ctx.shadowBlur = 0; // Reset
-                    break;
-
-                case STAGES.TOWN:
-                    grad.addColorStop(0, '#4a90e2'); // Morning Blue
-                    grad.addColorStop(0.6, '#b8d8f8');
-                    grad.addColorStop(1, '#fff0e0');
-                    ctx.fillStyle = grad;
-                    ctx.fillRect(0,0,width,height);
-                    break;
-
-                case STAGES.FLOWER_FIELDS:
-                    grad.addColorStop(0, '#70c1ff'); // Soft Day Sky
-                    grad.addColorStop(0.6, '#eef7ff');
-                    grad.addColorStop(1, '#b3ffb3'); // Pastel Green Field Baseline
-                    ctx.fillStyle = grad;
-                    ctx.fillRect(0,0,width,height);
-                    break;
-
-                case STAGES.CELEBRATION:
-                    grad.addColorStop(0, '#0a051b'); // Dark Festive Twilight
-                    grad.addColorStop(0.5, '#1e0f3c');
-                    grad.addColorStop(1, '#341446');
-                    ctx.fillStyle = grad;
-                    ctx.fillRect(0,0,width,height);
-                    drawCelebrationBackground();
-                    break;
-
-                case STAGES.MOUNTAINS:
-                    grad.addColorStop(0, '#2c3e50'); // Stormy/Foggy deep slate Blue
-                    grad.addColorStop(0.5, '#7f8c8d');
-                    grad.addColorStop(1, '#bdc3c7');
-                    ctx.fillStyle = grad;
-                    ctx.fillRect(0,0,width,height);
-                    drawMountainSilhouettes();
-                    break;
-
-                case STAGES.RAINSTORM:
-                    grad.addColorStop(0, '#111625'); // Deep Gloomy Teal-Grey
-                    grad.addColorStop(0.6, '#20293a');
-                    grad.addColorStop(1, '#151b26');
-                    ctx.fillStyle = grad;
-                    ctx.fillRect(0,0,width,height);
-                    break;
-
-                case STAGES.STARRY_NIGHT:
-                    grad.addColorStop(0, '#020208'); // Pure Lunar Landscape Sky
-                    grad.addColorStop(0.5, '#0a0d26');
-                    grad.addColorStop(1, '#141a46');
-                    ctx.fillStyle = grad;
-                    ctx.fillRect(0,0,width,height);
-                    drawStarsAndGiantMoon();
-                    break;
-
-                case STAGES.COSMIC:
-                    grad.addColorStop(0, '#02000a'); // Multi-galaxy Nebula backdrop
-                    grad.addColorStop(0.4, '#0d0526');
-                    grad.addColorStop(0.8, '#26053b');
-                    grad.addColorStop(1, '#051429');
-                    ctx.fillStyle = grad;
-                    ctx.fillRect(0,0,width,height);
-                    drawNebula();
-                    break;
-
-                case STAGES.FINAL_HILLTOP:
-                    grad.addColorStop(0, '#010105');
-                    grad.addColorStop(0.5, '#05071a');
-                    grad.addColorStop(1, '#0e0b24');
-                    ctx.fillStyle = grad;
-                    ctx.fillRect(0,0,width,height);
-                    drawStarsAndGiantMoon();
-                    drawLanternsAndHeart();
-                    break;
+            if(stage === STAGES.SUNRISE) {
+                grad.addColorStop(0, '#2c3e50'); grad.addColorStop(0.5, '#e74c3c'); grad.addColorStop(1, '#f1c40f');
+                ctx.fillStyle = grad; ctx.fillRect(0,0,width,height);
+                ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+                ctx.shadowBlur = 150; ctx.shadowColor = "#ffeb3b";
+                ctx.beginPath(); ctx.arc(width * 0.8, height * 0.4, 90, 0, Math.PI*2); ctx.fill(); ctx.shadowBlur = 0;
             }
-        }
-
-        // Draw parallax structures & environments
-        function drawEnvironmentForeground(stage) {
-            let width = canvas.width;
-            let height = canvas.height;
-            let timeModifier = globalTimeline * 0.002;
-
-            if (stage === STAGES.SUNRISE) {
-                // Parallax mountain ranges
-                ctx.fillStyle = "rgba(76, 28, 92, 0.4)";
-                ctx.beginPath();
-                ctx.moveTo(0, height*0.6);
-                for(let x=0; x<=width; x+=100) { ctx.lineTo(x, height*0.6 + Math.sin(x*0.002 + timeModifier)*30); }
-                ctx.lineTo(width, height); ctx.lineTo(0, height); ctx.fill();
-
-                // Low Mist layer
-                ctx.fillStyle = "rgba(255,255,255,0.15)";
-                ctx.fillRect(0, height*0.65, width, height*0.35);
-            }
-
-            if (stage === STAGES.TOWN) {
-                // Café outlines & quaint townhouses passing by
-                let shift = (globalTimeline * 0.4) % 600;
-                ctx.fillStyle = "rgba(200, 140, 160, 0.3)";
-                for(let i=-1; i<4; i++) {
-                    let rx = i*600 - shift;
-                    ctx.fillRect(rx, height*0.3, 220, height*0.5);
-                    ctx.fillRect(rx+280, height*0.25, 180, height*0.55);
-                    // Café awnings
-                    ctx.fillStyle = "#e67e22";
-                    ctx.fillRect(rx, height*0.45, 220, 25);
-                    ctx.fillStyle = "rgba(200, 140, 160, 0.3)";
-                }
-            }
-
-            if (stage === STAGES.FLOWER_FIELDS) {
-                // Beautiful vibrant multi-colored flowing petal bursts
-                if(Math.random() < 0.4) {
-                    particles.push({
-                        x: width + 50,
-                        y: height * 0.4 + Math.random() * (height * 0.5),
-                        size: Math.random() * 6 + 4,
-                        speedX: -(Math.random() * 4 + 5),
-                        speedY: Math.sin(Math.random() * 5) * 2,
-                        color: ['#ff4d94', '#ff80df', '#ff9999', '#ffffff'][Math.floor(Math.random()*4)],
-                        rot: Math.random() * Math.PI
-                    });
-                }
-                
-                // Draw ground fields
-                ctx.fillStyle = "#339966";
-                ctx.fillRect(0, height*0.7, width, height*0.3);
-
-                // Render and process petals
-                for(let i=particles.length-1; i>=0; i--) {
-                    let p = particles[i];
-                    p.x += p.speedX;
-                    p.y += p.speedY;
-                    p.rot += 0.05;
-                    ctx.save();
-                    ctx.translate(p.x, p.y);
-                    ctx.rotate(p.rot);
-                    ctx.fillStyle = p.color;
-                    // Draw leaf shape petal
-                    ctx.beginPath();
-                    ctx.ellipse(0, 0, p.size, p.size/1.7, 0, 0, Math.PI*2);
-                    ctx.fill();
-                    ctx.restore();
-                    if(p.x < -20) particles.splice(i, 1);
-                }
-            }
-
-            if(stage === STAGES.CELEBRATION) {
-                // Balloon creation
-                if(Math.random() < 0.15) {
-                    particles.push({
-                        x: Math.random() * width,
-                        y: height + 20,
-                        size: Math.random() * 12 + 10,
-                        speedY: -(Math.random() * 2 + 1.5),
-                        speedX: Math.sin(Math.random()) * 0.5,
-                        color: `hsl(${Math.random() * 360}, 85%, 65%)`
-                    });
-                }
-                // Render balloons
-                for(let i=particles.length-1; i>=0; i--) {
-                    let p = particles[i];
-                    p.y += p.speedY;
-                    p.x += p.speedX;
-                    ctx.fillStyle = p.color;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-                    ctx.fill();
-                    // String
-                    ctx.strokeStyle = "rgba(255,255,255,0.4)";
-                    ctx.beginPath();
-                    ctx.moveTo(p.x, p.y + p.size);
-                    ctx.lineTo(p.x, p.y + p.size + 20);
-                    ctx.stroke();
-                    if(p.y < -30) particles.splice(i, 1);
-                }
-            }
-
-            // Default road infrastructure rendering engine
-            if (stage !== STAGES.FINAL_HILLTOP) {
-                drawCinematicHighway(stage);
-            } else {
-                drawHilltopSummit();
-            }
-        }
-
-        function drawCinematicHighway(stage) {
-            let width = canvas.width;
-            let height = canvas.height;
-
-            // Highway Surface Base
-            let roadTopY = height * 0.75;
-            let roadGrad = ctx.createLinearGradient(0, roadTopY, 0, height);
-            
-            if (stage === STAGES.RAINSTORM || stage === STAGES.MOUNTAINS) {
-                roadGrad.addColorStop(0, '#10151d');
-                roadGrad.addColorStop(1, '#0a0d14');
-            } else if (stage === STAGES.COSMIC) {
-                roadGrad.addColorStop(0, 'rgba(40, 15, 80, 0.6)');
-                roadGrad.addColorStop(1, 'rgba(10, 5, 30, 0.8)');
-            } else {
-                roadGrad.addColorStop(0, '#2c3e50');
-                roadGrad.addColorStop(1, '#1a252f');
-            }
-            
-            ctx.fillStyle = roadGrad;
-            ctx.fillRect(0, roadTopY, width, height - roadTopY);
-
-            // Reflective sheen on wet asphalt for rainstorm
-            if (stage === STAGES.RAINSTORM) {
-                ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
-                ctx.fillRect(0, roadTopY, width, height - roadTopY);
-                // Headlight reflections on wet ground
-                let reflection = ctx.createRadialGradient(bike.x + 130, roadTopY + 30, 5, bike.x + 180, roadTopY + 50, 150);
-                reflection.addColorStop(0, 'rgba(255, 240, 200, 0.3)');
-                reflection.addColorStop(1, 'transparent');
-                ctx.fillStyle = reflection;
-                ctx.fillRect(0, roadTopY, width, height - roadTopY);
-            }
-
-            // Flowing Highway Lines to deliver high speed motion feel
-            ctx.strokeStyle = (stage === STAGES.COSMIC) ? "rgba(0, 255, 255, 0.7)" : "#f1c40f";
-            ctx.lineWidth = 4;
-            let speedLineShift = (globalTimeline * 1.6) % 160;
-            ctx.beginPath();
-            for (let x = -160; x < width + 160; x += 160) {
-                ctx.moveTo(x - speedLineShift, roadTopY + 25);
-                ctx.lineTo(x - speedLineShift + 70, roadTopY + 25);
-            }
-            ctx.stroke();
-
-            // Cosmic Edge Railing
-            if(stage === STAGES.COSMIC) {
-                ctx.strokeStyle = "rgba(255, 0, 128, 0.5)";
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.moveTo(0, roadTopY);
-                ctx.lineTo(width, roadTopY);
-                ctx.stroke();
-            }
-        }
-
-        function drawHilltopSummit() {
-            let width = canvas.width;
-            let height = canvas.height;
-            // The long highway transforms smoothly into a safe mountain precipice overlook
-            ctx.fillStyle = "#090812";
-            ctx.beginPath();
-            ctx.moveTo(0, height);
-            ctx.lineTo(width * 0.1, height * 0.82);
-            ctx.ellipse(width * 0.45, height * 0.82, width * 0.45, 120, 0, Math.PI, 0, false);
-            ctx.lineTo(width, height);
-            ctx.closePath();
-            ctx.fill();
-            
-            // Soft dynamic grassy texture/shading highlights on mountain summit rim
-            ctx.fillStyle = "#110f24";
-            ctx.beginPath();
-            ctx.ellipse(width * 0.45, height * 0.82, width * 0.43, 110, 0, Math.PI, 0, false);
-            ctx.fill();
-        }
-
-        // Secondary background modules
-        function drawCelebrationBackground() {
-            let width = canvas.width;
-            let height = canvas.height;
-            // Distant faint ambient festival carnival lights strings
-            ctx.strokeStyle = "rgba(255, 215, 0, 0.2)";
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(0, 50); ctx.bezierCurveTo(width*0.25, 120, width*0.75, 20, width, 90);
-            ctx.stroke();
-
-            // Fireworks burst engine simulation loop triggers
-            if(Math.random() < 0.03) {
-                let fx = Math.random() * width;
-                let fy = Math.random() * (height * 0.4);
-                let col = `hsl(${Math.random()*360}, 100%, 70%)`;
-                for(let a=0; a<12; a++) {
-                    let angle = (a/12) * Math.PI*2;
-                    particles.push({
-                        x: fx, y: fy,
-                        speedX: Math.cos(angle) * (Math.random()*3 + 2),
-                        speedY: Math.sin(angle) * (Math.random()*3 + 2),
-                        size: 3, color: col, alpha: 1, type: 'fw'
-                    });
-                }
-            }
-            // Animate fireworks
-            for(let i=particles.length-1; i>=0; i--) {
-                let p = particles[i];
-                if(p.type === 'fw') {
-                    p.x += p.speedX; p.y += p.speedY; p.alpha -= 0.02;
-                    ctx.fillStyle = p.color;
-                    ctx.globalAlpha = p.alpha;
-                    ctx.fillRect(p.x, p.y, p.size, p.size);
-                    ctx.globalAlpha = 1.0;
-                    if(p.alpha <= 0) particles.splice(i, 1);
-                }
-            }
-        }
-
-        function drawMountainSilhouettes() {
-            let width = canvas.width;
-            let height = canvas.height;
-            ctx.fillStyle = "rgba(44, 62, 80, 0.5)";
-            ctx.beginPath();
-            ctx.moveTo(0, height*0.75);
-            ctx.lineTo(width*0.2, height*0.35);
-            ctx.lineTo(width*0.5, height*0.6);
-            ctx.lineTo(width*0.8, height*0.25);
-            ctx.lineTo(width, height*0.75);
-            ctx.fill();
-        }
-
-        function drawStarsAndGiantMoon() {
-            let width = canvas.width;
-            let height = canvas.height;
-            // Draw Pre-generated stars
-            ctx.fillStyle = "#ffffff";
-            stars.forEach(s => {
-                ctx.globalAlpha = Math.abs(Math.sin(globalTimeline*0.001 + s.alpha));
-                ctx.fillRect(s.x % width, s.y % (height*0.6), s.size, s.size);
-            });
-            ctx.globalAlpha = 1.0;
-
-            // Giant Moon
-            let mx = width * 0.78;
-            let my = height * 0.32;
-            let moonGlow = ctx.createRadialGradient(mx, my, 40, mx, my, 120);
-            moonGlow.addColorStop(0, "rgba(255, 255, 240, 1)");
-            moonGlow.addColorStop(0.2, "rgba(255, 255, 240, 0.8)");
-            moonGlow.addColorStop(1, "transparent");
-            ctx.fillStyle = moonGlow;
-            ctx.beginPath(); ctx.arc(mx, my, 120, 0, Math.PI*2); ctx.fill();
-        }
-
-        function drawNebula() {
-            let width = canvas.width;
-            let height = canvas.height;
-            ctx.save();
-            // Complex space aura blending
-            let neb = ctx.createRadialGradient(width*0.3, height*0.3, 10, width*0.3, height*0.3, 400);
-            neb.addColorStop(0, "rgba(150, 0, 255, 0.25)");
-            neb.addColorStop(1, "transparent");
-            ctx.fillStyle = neb;
-            ctx.fillRect(0,0,width,height);
-
-            let neb2 = ctx.createRadialGradient(width*0.7, height*0.5, 50, width*0.7, height*0.5, 500);
-            neb2.addColorStop(0, "rgba(0, 200, 255, 0.2)");
-            neb2.addColorStop(1, "transparent");
-            ctx.fillStyle = neb2;
-            ctx.fillRect(0,0,width,height);
-            ctx.restore();
-        }
-
-        function drawLanternsAndHeart() {
-            let width = canvas.width;
-            let height = canvas.height;
-
-            // Generate upward floating sky lanterns
-            if(Math.random() < 0.1) {
-                lanterns.push({
-                    x: Math.random() * width,
-                    y: height + 20,
-                    size: Math.random() * 6 + 4,
-                    speedY: -(Math.random() * 1.2 + 0.8),
-                    drift: Math.sin(Math.random()) * 0.3
+            else if(stage === STAGES.STARRY_NIGHT || stage === STAGES.FINAL_HILLTOP) {
+                grad.addColorStop(0, '#02010a'); grad.addColorStop(1, '#0b132b');
+                ctx.fillStyle = grad; ctx.fillRect(0,0,width,height);
+                ctx.fillStyle = "#ffffff";
+                stars.forEach(s => {
+                    ctx.globalAlpha = Math.abs(Math.sin(globalTimeline*0.001 + s.alpha));
+                    ctx.fillRect(s.x % width, s.y % (height*0.6), s.size, s.size);
                 });
+                ctx.globalAlpha = 1.0;
+                let mx = width * 0.8; let my = height * 0.25;
+                let moonGlow = ctx.createRadialGradient(mx, my, 60, mx, my, 200);
+                moonGlow.addColorStop(0, "rgba(255, 255, 255, 1)"); moonGlow.addColorStop(0.3, "rgba(200, 220, 255, 0.6)"); moonGlow.addColorStop(1, "transparent");
+                ctx.fillStyle = moonGlow; ctx.beginPath(); ctx.arc(mx, my, 200, 0, Math.PI*2); ctx.fill();
             }
-
-            lanterns.forEach((l, idx) => {
-                l.y += l.speedY;
-                l.x += l.drift;
-                let lanGlow = ctx.createRadialGradient(l.x, l.y, 1, l.x, l.y, l.size * 2);
-                lanGlow.addColorStop(0, "#fff5cc");
-                lanGlow.addColorStop(0.4, "#ffaa44");
-                lanGlow.addColorStop(1, "transparent");
-                ctx.fillStyle = lanGlow;
-                ctx.beginPath();
-                ctx.arc(l.x, l.y, l.size * 2, 0, Math.PI*2);
-                ctx.fill();
-            });
-
-            // Giant Cosmic Heart formed by stars pulsing softly over the couple
-            ctx.save();
-            ctx.translate(width * 0.5, height * 0.32);
-            let pulseFactor = 1 + Math.sin(globalTimeline * 0.002) * 0.03;
-            ctx.scale(pulseFactor, pulseFactor);
-            
-            ctx.fillStyle = "rgba(255, 105, 180, 0.85)";
-            ctx.shadowBlur = 25;
-            ctx.shadowColor = "#ff3388";
-            
-            // Mathematical Parametric Heart Curve Plotting constructed out of individual stars
-            for (let i = 0; i < Math.PI * 2; i += 0.15) {
-                let hx = 16 * Math.pow(Math.sin(i), 3);
-                let hy = -(13 * Math.cos(i) - 5 * Math.cos(2*i) - 2 * Math.cos(3*i) - Math.cos(4*i));
-                ctx.beginPath();
-                ctx.arc(hx * 7, hy * 7, 3, 0, Math.PI*2);
-                ctx.fill();
+            else if(stage === STAGES.RAINSTORM) {
+                grad.addColorStop(0, '#1c1f24'); grad.addColorStop(1, '#2c3e50');
+                ctx.fillStyle = grad; ctx.fillRect(0,0,width,height);
             }
-            ctx.restore();
+            else {
+                grad.addColorStop(0, '#0f2027'); grad.addColorStop(0.5, '#203a43'); grad.addColorStop(1, '#2c5364');
+                ctx.fillStyle = grad; ctx.fillRect(0,0,width,height);
+            }
+        }
+
+        function drawEnvironmentForeground(stage) {
+            let width = canvas.width; let height = canvas.height;
+            if (stage !== STAGES.FINAL_HILLTOP) {
+                let roadTopY = height * 0.74;
+                let roadGrad = ctx.createLinearGradient(0, roadTopY, 0, height);
+                roadGrad.addColorStop(0, '#1a1c1d'); roadGrad.addColorStop(1, '#0a0a0c'); // Realistic asphalt
+                ctx.fillStyle = roadGrad; ctx.fillRect(0, roadTopY, width, height - roadTopY);
+                
+                // Realistic motion-blurred road lines
+                ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+                let speedLineShift = (globalTimeline * 3.0) % 250;
+                for (let x = -250; x < width + 250; x += 250) {
+                    ctx.fillRect(x - speedLineShift, roadTopY + 40, 120, 4);
+                }
+            } else {
+                ctx.fillStyle = "#0a0c10"; // Dark dirt/grass edge
+                ctx.beginPath(); ctx.moveTo(0, height); ctx.lineTo(width * 0.1, height * 0.85);
+                ctx.ellipse(width * 0.45, height * 0.85, width * 0.5, 120, 0, Math.PI, 0, false);
+                ctx.lineTo(width, height); ctx.closePath(); ctx.fill();
+            }
         }
 
         function drawWeatherEffects(stage) {
-            let width = canvas.width;
-            let height = canvas.height;
-
-            if (stage === STAGES.MOUNTAINS) {
-                // Dense beautiful volumetric low-altitude mountain cloud fog
-                let fogGrad = ctx.createLinearGradient(0,0, width, 0);
-                fogGrad.addColorStop(0, "rgba(240,245,250, 0.05)");
-                fogGrad.addColorStop(0.5, "rgba(240,245,250, 0.18)");
-                fogGrad.addColorStop(1, "rgba(240,245,250, 0.05)");
-                ctx.fillStyle = fogGrad;
-                ctx.fillRect(0, height*0.2, width, height*0.6);
-            }
-
+            let width = canvas.width; let height = canvas.height;
             if (stage === STAGES.RAINSTORM) {
-                // Add fast moving slanted sharp raindrops
-                for(let i=0; i<35; i++) {
-                    rainDrops.push({
-                        x: Math.random() * width,
-                        y: -20,
-                        len: Math.random() * 30 + 25,
-                        speed: Math.random() * 15 + 20
-                    });
-                }
-
-                ctx.strokeStyle = "rgba(174, 219, 255, 0.38)";
-                ctx.lineWidth = 1.5;
+                ctx.strokeStyle = "rgba(200, 220, 255, 0.4)"; ctx.lineWidth = 1.5;
+                for(let i=0; i<40; i++) rainDrops.push({ x: Math.random() * width, y: -30, len: Math.random() * 40 + 20, speed: Math.random() * 20 + 20 });
                 for(let i=rainDrops.length-1; i>=0; i--) {
-                    let r = rainDrops[i];
-                    r.y += r.speed;
-                    r.x -= 4; // Angle downward left
-                    ctx.beginPath();
-                    ctx.moveTo(r.x, r.y);
-                    ctx.lineTo(r.x - 5, r.y + r.len);
-                    ctx.stroke();
+                    let r = rainDrops[i]; r.y += r.speed; r.x -= 6;
+                    ctx.beginPath(); ctx.moveTo(r.x, r.y); ctx.lineTo(r.x - 5, r.y + r.len); ctx.stroke();
                     if(r.y > height) rainDrops.splice(i, 1);
                 }
             }
         }
 
-        // Detailed cinematic rendering module for motorcycle and Tamil couple figures
-        function drawCinematicCoupleAndBike() {
+        // =========================================================================
+        // REALISTIC RENDERING ENGINE (Gradients, Proportions, Skin Tones, Shading)
+        // =========================================================================
+        function drawRealisticPhotorealisticModels() {
             let bx = bike.x;
             let by = bike.y;
 
-            ctx.save();
+            // --- REALISTIC HEADLIGHT CAST ---
+            let lightGrad = ctx.createRadialGradient(bx + 160, by + 5, 5, bx + 700, by + 40, 400);
+            lightGrad.addColorStop(0, "rgba(255, 245, 230, 0.9)");
+            lightGrad.addColorStop(0.3, "rgba(255, 245, 230, 0.2)");
+            lightGrad.addColorStop(1, "transparent");
+            ctx.fillStyle = lightGrad;
+            ctx.beginPath(); ctx.moveTo(bx + 140, by + 5); ctx.lineTo(bx + 800, by - 120); ctx.lineTo(bx + 800, by + 250); ctx.fill();
+
+            // --- REALISTIC MOTORCYCLE (Classic Indian Cruiser/Enfield style) ---
             
-            // Volumetric headlight glow projection matrix
-            let headlightGrad = ctx.createRadialGradient(bx + 110, by + 12, 5, bx + 450, by + 20, 260);
-            if(currentStage === STAGES.RAINSTORM || currentStage === STAGES.STARRY_NIGHT || currentStage === STAGES.COSMIC || currentStage === STAGES.FINAL_HILLTOP) {
-                headlightGrad.addColorStop(0, "rgba(255, 245, 220, 0.8)");
-                headlightGrad.addColorStop(0.2, "rgba(255, 240, 200, 0.3)");
-                headlightGrad.addColorStop(1, "transparent");
-                ctx.fillStyle = headlightGrad;
-                ctx.beginPath();
-                ctx.moveTo(bx + 100, by + 12);
-                ctx.lineTo(bx + 600, by - 120);
-                ctx.lineTo(bx + 600, by + 260);
-                ctx.closePath();
-                ctx.fill();
-            }
+            // 1. Realistic Tires & Rims with Motion Blur
+            drawRealisticWheel(bx - 110, by + 50);
+            drawRealisticWheel(bx + 110, by + 50);
 
-            // --- THE MOTORCYCLE ---
-            // Wheels (Rear & Front)
-            drawWheel(bx - 85, by + 45);
-            drawWheel(bx + 85, by + 45);
+            // 2. Chrome Exhaust System
+            let exhaustGrad = ctx.createLinearGradient(bx - 120, by + 35, bx + 50, by + 15);
+            exhaustGrad.addColorStop(0, "#888"); exhaustGrad.addColorStop(0.3, "#fff"); exhaustGrad.addColorStop(0.7, "#444"); exhaustGrad.addColorStop(1, "#aaa");
+            ctx.fillStyle = exhaustGrad;
+            ctx.beginPath(); ctx.moveTo(bx - 130, by + 35); ctx.lineTo(bx + 20, by + 35); ctx.lineTo(bx + 40, by + 15); ctx.lineTo(bx - 110, by + 25); ctx.fill();
+            
+            // 3. Realistic Engine Block (Metallic fins, shadows)
+            let engineGrad = ctx.createLinearGradient(bx - 40, by - 10, bx + 30, by + 40);
+            engineGrad.addColorStop(0, "#b0b0b0"); engineGrad.addColorStop(0.5, "#5a5a5a"); engineGrad.addColorStop(1, "#222");
+            ctx.fillStyle = engineGrad;
+            ctx.fillRect(bx - 35, by - 5, 60, 45); // Main block
+            // Engine Fins
+            ctx.fillStyle = "#111";
+            for(let i=0; i<5; i++) ctx.fillRect(bx - 35, by + i*8, 60, 3);
 
-            // Metallic Body Chassis Frame & Fuel Tank
-            ctx.fillStyle = "#1c1c24"; // Sleek premium matte midnight body
-            ctx.beginPath();
-            ctx.moveTo(bx - 85, by + 45);
-            ctx.lineTo(bx - 30, by - 5);
-            ctx.lineTo(bx + 50, by - 10); // Tank line
-            ctx.lineTo(bx + 90, by + 45);
-            ctx.lineTo(bx - 30, by + 45);
-            ctx.closePath();
-            ctx.fill();
-
-            // Sculpted Fuel Tank (Sporty Cafe Racer Styling)
-            let tankGrad = ctx.createLinearGradient(bx - 30, by - 20, bx + 40, by + 10);
-            tankGrad.addColorStop(0, "#cc2e2e"); // Elegant Deep Maroon Crimson Red hue
-            tankGrad.addColorStop(1, "#520b0b");
+            // 4. Glossy Paint Fuel Tank (Classic Deep Red with Chrome Trim)
+            let tankGrad = ctx.createRadialGradient(bx + 10, by - 25, 5, bx + 10, by - 15, 60);
+            tankGrad.addColorStop(0, "#ff4040"); tankGrad.addColorStop(0.5, "#990000"); tankGrad.addColorStop(1, "#330000");
             ctx.fillStyle = tankGrad;
             ctx.beginPath();
-            ctx.moveTo(bx - 35, by - 5);
-            ctx.bezierCurveTo(bx - 20, by - 32, bx + 35, by - 32, bx + 45, by - 3);
-            ctx.lineTo(bx + 20, by + 12);
-            ctx.lineTo(bx - 30, by + 10);
-            ctx.closePath();
-            ctx.fill();
+            ctx.moveTo(bx - 50, by - 5);
+            ctx.bezierCurveTo(bx - 30, by - 35, bx + 50, by - 35, bx + 70, by - 10);
+            ctx.lineTo(bx + 40, by + 10);
+            ctx.lineTo(bx - 40, by + 10);
+            ctx.closePath(); ctx.fill();
+            
+            // Tank Highlight (Realistic Gloss)
+            ctx.fillStyle = "rgba(255,255,255,0.4)";
+            ctx.beginPath(); ctx.ellipse(bx + 10, by - 26, 25, 6, 0, 0, Math.PI*2); ctx.fill();
 
-            // Engine & Chrome Exhaust Pipe assembly
-            ctx.fillStyle = "#7f8c8d";
-            ctx.fillRect(bx - 25, by + 15, 50, 25);
-            ctx.fillStyle = "#bdc3c7";
-            ctx.fillRect(bx - 35, by + 35, 110, 8); // Tailpipe
+            // 5. Leather Seat (Textured Matte Black)
+            let seatGrad = ctx.createLinearGradient(bx - 110, by - 10, bx - 30, by + 5);
+            seatGrad.addColorStop(0, "#1a1a1a"); seatGrad.addColorStop(0.5, "#2a2a2a"); seatGrad.addColorStop(1, "#111");
+            ctx.fillStyle = seatGrad;
+            ctx.beginPath(); ctx.moveTo(bx - 100, by - 10); ctx.lineTo(bx - 45, by - 10); ctx.lineTo(bx - 35, by - 2); ctx.lineTo(bx - 100, by + 2); ctx.fill();
 
-            // Handlebars & Frontend forks
-            ctx.strokeStyle = "#34495e";
-            ctx.lineWidth = 5;
+            // 6. Chrome Front Forks & Headlight Bucket
+            ctx.fillStyle = exhaustGrad; // Reuse chrome
+            ctx.beginPath(); ctx.moveTo(bx + 110, by + 50); ctx.lineTo(bx + 75, by - 30); ctx.lineTo(bx + 85, by - 35); ctx.lineTo(bx + 120, by + 45); ctx.fill();
+            // Headlight casing
+            ctx.fillStyle = "#111"; ctx.beginPath(); ctx.arc(bx + 130, by - 10, 18, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(bx + 140, by - 10, 14, 0, Math.PI*2); ctx.fill();
+
+            // =========================================================================
+            // REALISTIC HUMANS (Skin tones, Fabric Shading, Anatomical Proportions)
+            // =========================================================================
+            let windWave = Math.sin(globalTimeline * 0.04) * 3;
+            
+            // Color Palettes
+            const skinTone = "#8D5A3B";      // Warm Brown Tamil skin tone base
+            const skinShadow = "#5A341E";    // Skin shadow
+            const skinHighlight = "#A97554"; // Skin highlight
+
+            // --- MALE RIDER ---
+            let mx = bx + 10;
+            let my = by - 35;
+
+            // Male Legs (Jeans Texture)
+            let denimGrad = ctx.createLinearGradient(mx - 20, my + 10, mx + 10, my + 60);
+            denimGrad.addColorStop(0, "#2c3e50"); denimGrad.addColorStop(1, "#1a252f");
+            ctx.fillStyle = denimGrad;
+            ctx.beginPath(); ctx.moveTo(mx - 20, my + 10); ctx.lineTo(mx + 10, my + 10); ctx.lineTo(mx + 30, by + 30); ctx.lineTo(mx + 5, by + 30); ctx.fill();
+
+            // Male Torso (Classic White Button-up Shirt with realistic fabric shading)
+            let shirtGrad = ctx.createLinearGradient(mx - 30, my - 40, mx + 20, my + 10);
+            shirtGrad.addColorStop(0, "#ffffff"); shirtGrad.addColorStop(0.7, "#d5d5d5"); shirtGrad.addColorStop(1, "#999999");
+            ctx.fillStyle = shirtGrad;
+            ctx.beginPath(); ctx.moveTo(mx - 30, my + 20); ctx.lineTo(mx - 15, my - 40); ctx.lineTo(mx + 20, my - 30); ctx.lineTo(mx + 15, my + 20); ctx.fill();
+            
+            // Fabric creases
+            ctx.strokeStyle = "rgba(0,0,0,0.15)"; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(mx - 5, my - 30); ctx.lineTo(mx - 15, my + 10); ctx.stroke();
+
+            // Male Arm (Skin tone exposed forearm & rolled up sleeve)
+            let armGrad = ctx.createLinearGradient(mx - 10, my - 30, bx + 75, by - 35);
+            armGrad.addColorStop(0, skinShadow); armGrad.addColorStop(0.5, skinTone); armGrad.addColorStop(1, skinHighlight);
+            ctx.strokeStyle = armGrad; ctx.lineWidth = 11; ctx.lineCap = "round";
+            ctx.beginPath(); ctx.moveTo(mx - 5, my - 30); ctx.lineTo(mx + 20, my - 15); ctx.lineTo(bx + 75, by - 35); ctx.stroke();
+            // Rolled sleeve
+            ctx.fillStyle = "#e0e0e0"; ctx.beginPath(); ctx.arc(mx + 20, my - 15, 8, 0, Math.PI*2); ctx.fill();
+
+            // Male Head & Hair
+            // Neck
+            ctx.fillStyle = skinShadow; ctx.fillRect(mx - 2, my - 50, 10, 15);
+            // Face profile (Realistic jawline and nose)
+            ctx.fillStyle = skinTone;
             ctx.beginPath();
-            ctx.moveTo(bx + 85, by + 45);
-            ctx.lineTo(bx + 55, by - 32);
-            ctx.stroke();
-            // Handlebar grip
+            ctx.moveTo(mx + 3, my - 45); ctx.lineTo(mx + 15, my - 42); // Jaw
+            ctx.lineTo(mx + 18, my - 55); ctx.lineTo(mx + 22, my - 60); // Nose bump
+            ctx.lineTo(mx + 15, my - 70); ctx.lineTo(mx - 5, my - 70); ctx.fill();
+            // Hair (Realistic dark brown/black textured layers)
             ctx.fillStyle = "#111";
-            ctx.fillRect(bx + 42, by - 35, 20, 6);
+            ctx.beginPath(); ctx.moveTo(mx - 8, my - 65); ctx.bezierCurveTo(mx - 15, my - 80, mx + 20, my - 85, mx + 15, my - 65); ctx.fill();
 
-            // --- THE TAMIL COUPLE (Hand-Crafted Cinematic Silhouette Design) ---
-            let windWave = Math.sin(globalTimeline * 0.025) * 4;
+            // --- FEMALE RIDER ---
+            let wx = mx - 35;
+            let wy = my + 10;
 
-            // 1. MAN (Riding Pose ahead)
-            let mx = bx + 5;
-            let my = by - 25;
-
-            // Man's torso and posture leaning slightly forward
-            ctx.fillStyle = "#12131a";
+            // Female Saree Flow (Realistic Silk Material Gradient)
+            let silkGrad = ctx.createLinearGradient(wx, wy, wx - 180, wy + 40);
+            silkGrad.addColorStop(0, "#800020"); // Deep Burgundy
+            silkGrad.addColorStop(0.5, "#C71585"); // Silk sheen highlight
+            silkGrad.addColorStop(1, "#4A0010");
+            ctx.fillStyle = silkGrad;
+            
+            // Dynamic Billowing Fabric
             ctx.beginPath();
-            ctx.moveTo(mx - 30, my + 30); // Lower spine
-            ctx.lineTo(mx - 15, my - 35); // Upper shoulder back
-            ctx.lineTo(mx + 25, my - 25); // Chest
-            ctx.lineTo(mx + 20, my + 35); // Waist
-            ctx.closePath();
+            ctx.moveTo(wx - 10, wy + 15);
+            ctx.bezierCurveTo(wx - 80 + windWave*2, wy - 5, wx - 150 + windWave*3, wy + 50, wx - 220, wy + 20 + windWave);
+            ctx.bezierCurveTo(wx - 140, wy + 80, wx - 60, wy + 60, wx + 5, wy + 25);
             ctx.fill();
-
-            // Man's arms outstretched reaching forward to handlebars
-            ctx.strokeStyle = "#12131a";
-            ctx.lineWidth = 11;
-            ctx.lineCap = "round";
+            
+            // Saree Gold Zari Border
+            ctx.strokeStyle = "#FFD700"; ctx.lineWidth = 3;
             ctx.beginPath();
-            ctx.moveTo(mx - 10, my - 25); // Shoulder
-            ctx.lineTo(mx + 22, my - 8);  // Elbow bent
-            ctx.lineTo(bx + 50, by - 30); // Hand on grip
+            ctx.moveTo(wx - 10, wy + 15);
+            ctx.bezierCurveTo(wx - 80 + windWave*2, wy - 5, wx - 150 + windWave*3, wy + 50, wx - 220, wy + 20 + windWave);
             ctx.stroke();
 
-            // Man's Traditional Head Profile (Sharp features, groomed Tamil beard silhouette)
-            ctx.fillStyle = "#1a1b24";
+            // Female Torso (Saree Blouse)
+            ctx.fillStyle = "#2b0000";
+            ctx.beginPath(); ctx.moveTo(wx - 25, wy + 20); ctx.lineTo(wx - 10, wy - 30); ctx.lineTo(wx + 20, wy - 20); ctx.lineTo(wx + 5, wy + 25); ctx.fill();
+
+            // Female Bare Midriff (Skin tone peeking through saree draping)
+            ctx.fillStyle = skinTone;
+            ctx.beginPath(); ctx.moveTo(wx - 20, wy + 10); ctx.lineTo(wx - 10, wy - 5); ctx.lineTo(wx + 15, wy); ctx.lineTo(wx + 5, wy + 15); ctx.fill();
+
+            // Female Arm Wrapping Around
+            ctx.strokeStyle = armGrad; // Use same skin gradient setup
+            ctx.lineWidth = 8;
+            ctx.beginPath(); ctx.moveTo(wx - 5, wy - 25); ctx.lineTo(wx + 30, wy - 15); ctx.lineTo(mx - 5, my + 15); ctx.stroke();
+            
+            // Gold Bangles on wrist
+            ctx.strokeStyle = "#FFD700"; ctx.lineWidth = 2;
+            for(let b=0; b<4; b++) { ctx.beginPath(); ctx.moveTo(mx - 10 - b*2, my + 10 + b); ctx.lineTo(mx - 5 - b*2, my + 15 + b); ctx.stroke(); }
+
+            // Female Head & Flowing Hair
+            ctx.fillStyle = skinTone;
+            ctx.beginPath(); ctx.arc(wx + 10, wy - 45, 12, 0, Math.PI*2); ctx.fill(); // Head
+            
+            // Realistic Hair Flow (Rich dark brown/black with specular sheen)
+            let hairGrad = ctx.createLinearGradient(wx, wy - 50, wx - 150, wy - 20);
+            hairGrad.addColorStop(0, "#0a0a0a"); hairGrad.addColorStop(0.5, "#2a1b15"); hairGrad.addColorStop(1, "transparent");
+            ctx.fillStyle = hairGrad;
+            
             ctx.beginPath();
-            ctx.arc(mx + 10, my - 58, 15, 0, Math.PI*2); // Cranium
+            ctx.moveTo(wx + 15, wy - 55);
+            ctx.bezierCurveTo(wx - 40 + windWave*2, wy - 60, wx - 100 + windWave*3, wy - 10, wx - 160, wy - 15 + windWave);
+            ctx.bezierCurveTo(wx - 90, wy + 10, wx - 40, wy - 30, wx + 5, wy - 40);
             ctx.fill();
-            // Jaw outline and hairstyle texture bump
-            ctx.beginPath();
-            ctx.moveTo(mx + 2, my - 48);
-            ctx.lineTo(mx + 25, my - 52); // Defined Jaw
-            ctx.lineTo(mx + 18, my - 68);
-            ctx.closePath();
-            ctx.fill();
-
-            // 2. WOMAN (Sitting closely behind, hugging tightly)
-            let wx = mx - 32;
-            let wy = my + 5;
-
-            // Flowing Tamil Saree & beautiful hair billowing backwards in wind
-            ctx.save();
-            ctx.fillStyle = "rgba(230, 33, 100, 0.95)"; // Vibrant Festive Magenta/Crimson Traditional Saree Palette
-            ctx.beginPath();
-            ctx.moveTo(wx - 20, wy + 25);
-            ctx.bezierCurveTo(wx - 55 + windWave, wy + 40, wx - 75 + windWave, wy + 75, wx - 15, wy + 25);
-            ctx.closePath();
-            ctx.fill();
-            ctx.restore();
-
-            // Woman's torso leaning fully into the back of the rider
-            ctx.fillStyle = "#0c0d12";
-            ctx.beginPath();
-            ctx.moveTo(wx - 25, wy + 25); // Hips
-            ctx.lineTo(wx - 10, wy - 32); // Upper Back
-            ctx.lineTo(wx + 22, wy - 25); // Chest against his back
-            ctx.lineTo(wx + 5, wy + 28);
-            ctx.closePath();
-            ctx.fill();
-
-            // Woman's Loving Arms wrapped tightly securely around his waist
-            ctx.strokeStyle = "#0c0d12";
-            ctx.lineWidth = 10;
-            ctx.beginPath();
-            ctx.moveTo(wx - 2, wy - 25);  // Her shoulder
-            ctx.lineTo(wx + 25, wy - 15); // Wrapping around his chest/stomach
-            ctx.lineTo(mx - 5, my + 5);
-            ctx.stroke();
-
-            // Woman's beautiful head profile nestled tenderly on his shoulder
-            ctx.fillStyle = "#121319";
-            ctx.beginPath();
-            ctx.arc(wx + 8, wy - 48, 13.5, 0, Math.PI*2);
-            ctx.fill();
-
-            // Flowing long dark hair blowing backward dynamically in breeze
-            ctx.fillStyle = "#050508";
-            ctx.beginPath();
-            ctx.moveTo(wx - 5, wy - 58);
-            ctx.bezierCurveTo(wx - 45 + (windWave * 1.5), wy - 50, wx - 55 + (windWave * 2), wy - 10, wx + 2, wy - 42);
-            ctx.closePath();
-            ctx.fill();
-
-            ctx.restore();
         }
 
-        // Sub-renderer for wheel dynamics
-        function drawWheel(x, y) {
+        // =========================================================================
+        // REALISTIC WHEEL RENDERING (Rubber textures, Brake Discs, Spokes)
+        // =========================================================================
+        function drawRealisticWheel(x, y) {
             ctx.save();
             ctx.translate(x, y);
             ctx.rotate(bike.wheelRotation);
 
-            // Heavy Rim/Tire ring
-            ctx.strokeStyle = "#111";
-            ctx.lineWidth = 12;
-            ctx.beginPath();
-            ctx.arc(0, 0, 38, 0, Math.PI*2);
-            ctx.stroke();
+            // Realistic Rubber Tire (Dark grey/black gradient)
+            let tireGrad = ctx.createRadialGradient(0,0, 35, 0,0, 48);
+            tireGrad.addColorStop(0, "#111"); tireGrad.addColorStop(0.5, "#2a2a2a"); tireGrad.addColorStop(1, "#050505");
+            ctx.fillStyle = tireGrad;
+            ctx.beginPath(); ctx.arc(0, 0, 46, 0, Math.PI*2); ctx.fill();
+            
+            // Chrome Wheel Rim
+            ctx.strokeStyle = "#d4d4d4"; ctx.lineWidth = 4;
+            ctx.beginPath(); ctx.arc(0, 0, 36, 0, Math.PI*2); ctx.stroke();
 
-            // Inner Metallic Mag spokes structure
-            ctx.strokeStyle = "#7f8c8d";
-            ctx.lineWidth = 3;
-            for (let s = 0; s < 6; s++) {
-                ctx.rotate(Math.PI / 3);
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.lineTo(0, 36);
-                ctx.stroke();
+            // Brake Rotor Disc (Metallic ring with drill holes)
+            ctx.strokeStyle = "#888"; ctx.lineWidth = 6;
+            ctx.beginPath(); ctx.arc(0, 0, 18, 0, Math.PI*2); ctx.stroke();
+            ctx.fillStyle = "#000";
+            for(let d=0; d<8; d++) {
+                ctx.beginPath(); ctx.arc(Math.cos(d*Math.PI/4)*18, Math.sin(d*Math.PI/4)*18, 1.5, 0, Math.PI*2); ctx.fill();
             }
+
+            // Fine Wire Spokes (Classic Motorcycle style)
+            ctx.strokeStyle = "#999"; ctx.lineWidth = 1;
+            for (let s = 0; s < 18; s++) {
+                ctx.rotate(Math.PI / 9);
+                ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, 35); ctx.stroke();
+            }
+
+            // Central Axle
+            ctx.fillStyle = "#333"; ctx.beginPath(); ctx.arc(0, 0, 5, 0, Math.PI*2); ctx.fill();
             ctx.restore();
         }
 
-        // Ignition
         loop();
     </script>
 </body>
